@@ -1,0 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap');
+@import "tailwindcss";
+
+.flower {
+  width: 300px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  /* Gentle breathing/floating animation for the whole flower */
+  animation: gentleFloat 6s ease-in-out infinite alternate;
+  /* Add a subtle base glow that expands on hover */
+  border-radius: 50%;
+  box-shadow: 0 0 0px rgba(255, 182, 193, 0);
+  transition: box-shadow 3s ease;
+  cursor: pointer;
+}
+
+.flower:hover {
+  box-shadow: 0 0 100px 20px rgba(255, 107, 139, 0.15);
+}
+
+@keyframes gentleFloat {
+  0% { transform: translateY(10px); }
+  100% { transform: translateY(-10px); }
+}
+
+@keyframes twinkle {
+  0% { opacity: 0; transform: translateY(0) scale(0.5); }
+  50% { opacity: 0.8; transform: translateY(-10px) scale(1.2); }
+  100% { opacity: 0; transform: translateY(-20px) scale(0.8); }
+}
+
+.petal {
+  position: absolute;
+  width: 50px;
+  height: 140px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(255,141,161,0.9) 60%, rgba(212,255,141,0.8) 100%);
+  border-radius: 50% 50% 50% 50% / 80% 80% 20% 20%;
+  box-shadow: 0 0 20px rgba(255, 141, 161, 0.15);
+  transform-origin: bottom center;
+  bottom: 50%;
+  
+  /* Initial state for the bloom animation */
+  opacity: 0;
+  transform: rotate(var(--angle)) scale(1);
+  
+  /* Romantic slow bloom */
+  animation: bloom 4.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+  transition: background 3s ease, box-shadow 3s ease, transform 0.5s ease;
+}
+
+/* Symmetrical blooming delays for a natural, romantic opening */
+.petal1 { --angle: 0deg; animation-delay: 0.5s; }
+.petal4 { --angle: 180deg; animation-delay: 0.5s; }
+
+.petal2 { --angle: 60deg; animation-delay: 1.8s; }
+.petal5 { --angle: 240deg; animation-delay: 1.8s; }
+
+.petal3 { --angle: 120deg; animation-delay: 3.0s; }
+.petal6 { --angle: 300deg; animation-delay: 3.0s; }
+
+@keyframes bloom {
+  0% {
+    transform: rotate(var(--angle)) scale(0) translateY(20px) rotateX(-30deg);
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(var(--angle)) scale(1) translateY(0) rotateX(0deg);
+    opacity: 1;
+  }
+}
+
+.stamen {
+  position: absolute;
+  width: 3px;
+  height: 75px;
+  background-color: #b5d596;
+  bottom: 50%;
+  transform-origin: bottom center;
+  border-radius: 2px;
+  z-index: 5;
+  
+  opacity: 0;
+  transform: rotate(var(--angle)) scaleY(1);
+  animation: stamenBloom 3.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+.stamen::after {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: -4px;
+  width: 11px;
+  height: 22px;
+  background-color: #ffaa00;
+  border-radius: 50px;
+  transform: rotate(15deg);
+  box-shadow: 0 0 8px rgba(255, 170, 0, 0.6);
+  
+  opacity: 0;
+  animation: antherBloom 3s ease-in-out forwards;
+}
+
+/* Stamens emerge after the petals */
+.stamen1 { --angle: 30deg; animation-delay: 4.5s; }
+.stamen1::after { animation-delay: 5.5s; }
+.stamen2 { --angle: 90deg; animation-delay: 4.7s; }
+.stamen2::after { animation-delay: 5.7s; }
+.stamen3 { --angle: 150deg; animation-delay: 4.9s; }
+.stamen3::after { animation-delay: 5.9s; }
+.stamen4 { --angle: 210deg; animation-delay: 5.1s; }
+.stamen4::after { animation-delay: 6.1s; }
+.stamen5 { --angle: 270deg; animation-delay: 5.3s; }
+.stamen5::after { animation-delay: 6.3s; }
+.stamen6 { --angle: 330deg; animation-delay: 5.5s; }
+.stamen6::after { animation-delay: 6.5s; }
+
+@keyframes stamenBloom {
+  0% {
+    transform: rotate(var(--angle)) scaleY(0);
+    opacity: 0;
+  }
+  100% {
+    transform: rotate(var(--angle)) scaleY(1);
+    opacity: 1;
+  }
+}
+
+@keyframes antherBloom {
+  0% { opacity: 0; transform: rotate(15deg) scale(0); }
+  100% { opacity: 1; transform: rotate(15deg) scale(1); }
+}
+
+.center {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background-color: #fffacd;
+  border-radius: 50%;
+  box-shadow: 0 0 20px 5px rgba(255, 250, 205, 0.8);
+  z-index: 10;
+  
+  opacity: 0;
+  animation: centerBloom 4s ease-in-out 2s forwards;
+}
+
+@keyframes centerBloom {
+  0% { transform: scale(0); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Romantic Glow & Movement on Hover */
+.flower:hover .petal {
+  background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,107,139,0.95) 60%, rgba(212,255,141,0.9) 100%);
+  box-shadow: 0 0 40px rgba(255, 107, 139, 0.8);
+}
